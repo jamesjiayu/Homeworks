@@ -17,8 +17,8 @@ export default function App () {
     <>{/*<DataTable />
       <EnhancedTable />
        <SumNumEachCountry /> 
-      <RegionModelFilters />
-      <SumNumEachCountryVanilla />*/}
+      <RegionModelFilters />       
+      <SumNumEachCountryVanilla data={data} />*/}
       <RegionModelFiltersVanilla data={data} />
     </>
   )
