@@ -1,3 +1,48 @@
+Virtual DOM vs real DOM, what is diffing algorithm and reconciliation, why does React use virtual DOM
+React lifecycle methods, 3 stages, how and why do we use them
+The purpose of using the key attribute when we use map in JSX
+Ways of triggering component update
+What is HOC and higher order function?
+What/why custom hooks?
+What is the “children” props?
+what/why React.memo, useMemo, useCallback
+1. Virtual DOM is the virtual representation of real Dom  in memory. Both of them are objects, and tree structures. React uses virtual DOM for improving the proformance, because real dom updates expensively. Diffing algorithm is to compare the virtual Dom to the previous virtual Dom to find the difference.Reconciliation will appy those change to the real Dom. 
+
+
+2.React lifecycle: 
+Stage 1(Mounting,1st time render): contractor (create the instance and initialization ), render, componentDidMount(async http request)
+Stage 2(Updateing, rerenders): shouldComponentUpdate, (if yes), render,  componentDidUpdate
+Stage 3(Unmounting):componentWillUnmount(get data before the components destroied)
+
+
+3. The key attribute is for react diffing algorithm, it should be unique in its map array area.[better way to put it…]
+
+
+4. Ways of triggering updates. 1 props or state change.2 scu return yes. 3 force update 4 its fathers update 
+
+
+5. HOC: higher order component, which accepts a component as an argument, reuse logic (state, lifecycle methods,event handler… ) and return a new component.  Usually starts with ‘With’. Higher order function is silmily with HOC, takes other functions as arguments, operate on them,  or returns them.
+
+
+6. Custom Hooks names start with use. Taking some hooks from a component, building my own, and sharing logic between components. [share the stateful logic, not states only? ] 
+
+
+7. ‘Children’ is the ‘props’ property.  
+ 1,undefined,which means father passes nothing to his son between the jsx node 
+ 2, a string, like ‘asdf’, pass a string.  [3 jsx node]
+ 3.1, an object.  like the object.type is ‘div’. Pass a html tag
+ 3.2, an object, like  the object.type is ƒ TestPropsChildren(props), pass a fn component. 
+ 3.3, an object, like class TestPropsChildrenClass, pass a class component
+ 4, an array of objects.  Pass two or more above, excluding undefined
+
+
+8. React.memo is a HOC, takes 2 arguments: component and arePropsEqual fn (optional). It will compare the previous prop to the current to see if they are shallowly equal. If not, re-render. If yes, not render. Similar with SCU, but using for fn component and no state comparison. 
+
+
+useMemo and useCallback are hooks fn.  Both take 2 arguments, 2nd are dependencies and for performance optimization. useMemo take the fn to get a result,  kees and returns the result between renders, while useCallback takes fn,keeps and returns it. 
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
