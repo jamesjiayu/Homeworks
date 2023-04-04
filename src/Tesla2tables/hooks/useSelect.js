@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 export default function useSelect ({ initState, data }) {
   const [val, setVal] = useState(initState || '')//init?
   const onChang = (e) => {
-    console.log(e.target.value, 'e in useSelect'); setVal(e.target.value)
+    //  console.log(e.target.value, 'e in useSelect'); 
+    setVal(e.target.value)
   }
   useEffect(() => {
     setVal(data && data.length ? data[0] : '')

@@ -10,16 +10,24 @@ import "./App.css"
 import SumNumEachCountryVanilla from "./Tesla2tables/SumNumEachCountryVanilla"
 import RegionModelFiltersVanilla from "./Tesla2tables/RegionModelFiltersVanilla"
 import useGetData from "./Tesla2tables/hooks/useGetData"
+import CarsApp from "./contextRedux/components/CarsApp"
+import { useState, createContext } from "react"
+export const MyContext = createContext()//outside fn
 export default function App () {
-  const { isLoading, error, data } = useGetData()
+  // const [counter, setCounter] = useState(1)
+  // const increment = () => { setCounter(counter + 1) }
+  // const { isLoading, error, data } = useGetData()
   // console.log(data, 'data in App')
   return (
     <>{/*<DataTable />
       <EnhancedTable />
        <SumNumEachCountry /> 
       <RegionModelFilters />       
-      <SumNumEachCountryVanilla data={data} />*/}
-      <RegionModelFiltersVanilla data={data} />
+      <SumNumEachCountryVanilla data={data} />
+      <RegionModelFiltersVanilla data={data} /> 
+      <MyContext.Provider value={{ counter, increment }}> 
+      <CarsApp /></MyContext.Provider>*/}
+      <CarsApp />
     </>
   )
 }

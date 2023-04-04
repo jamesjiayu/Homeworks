@@ -78,7 +78,30 @@ function createData (arr, region = 'All', model = 'All') {
   })
   return fliterArr
 }
-
+function formatData (items, options) {
+  const obj = items.reduce((acc, curr) => {
+    if (
+      (!acc[curr.region] && curr.region === options.region) ||
+      (!acc[curr.region] && options.region === "all")
+    ) {
+      acc[curr.region] = [{ region: curr.region, model: "sum", sales: 0 }]
+    }
+    if (
+      acc[curr.region] &&
+      (curr.model === options.model || options.model === "all")
+    ) {
+      acc[curr.region][0].sales += curr.sales
+      acc[curr.region].push(curr)
+    }
+    return acc
+  }, {})
+  return obj
+}
+//console.log(formatData(array, { region: 'all', model: 'all' }))
+// {CA: [{…}, {…}, {…}, {…}, {…}]
+// EU: [{…}, {…}, {…}, {…}]
+// US: [{…}, {…}, {…}, {…}]
+// }
 export default function RegionModelFiltersVanilla ({ data }) {
   // const [rows, setRows] = useState(data)
   // console.log(data, 'data in RegionModelFiltersVanilla')
