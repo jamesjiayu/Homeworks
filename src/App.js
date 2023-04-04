@@ -12,7 +12,8 @@ import RegionModelFiltersVanilla from "./Tesla2tables/RegionModelFiltersVanilla"
 import useGetData from "./Tesla2tables/hooks/useGetData"
 import CarsApp from "./contextRedux/components/CarsApp"
 import { useState, createContext } from "react"
-export const MyContext = createContext()//outside fn
+import { Provider, store } from "./contextRedux/redux/myRedux"
+//export const MyContext = createContext()//outside fn
 export default function App () {
   // const [counter, setCounter] = useState(1)
   // const increment = () => { setCounter(counter + 1) }
@@ -27,7 +28,7 @@ export default function App () {
       <RegionModelFiltersVanilla data={data} /> 
       <MyContext.Provider value={{ counter, increment }}> 
       <CarsApp /></MyContext.Provider>*/}
-      <CarsApp />
+      <Provider store={store}><CarsApp /></Provider>
     </>
   )
 }

@@ -3,26 +3,27 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Component } from "react"
 import { useContext } from "react"
-import { store } from "../redux/myRedux"
+import { store, useSelector, useDispatch, } from "../redux/myRedux"
 // import { MyContext } from "../../App"
 //import { CounterContext } from "../CounterContext"
 //import { store, MyProviderContext, useSelector, useDispatch } from "../redux/redux"
 //import { useSelector, useDispatch, connect } from "react-redux"
 
 
-export const CounterApp = () => {
+export const CounterApp = (props) => {
+  //console.log(props, 'props in CounterApp')
   // const { counter, increment } = useContext(MyContext)
   // console.log(useContext(MyContext))
   // const { store } = useContext(MyProviderContext)
   // console.log(store, 'in countapp store')
   // // const { counter, increment } = useContext(CounterContext)
-  const [counter, setCounter] = useState(store.getState().counter)
-  useEffect(() => {
-    store.subscribe(() => {
-      const { counter } = store.getState()
-      setCounter(counter)
-    })
-  }, [])
+  // const [counter, setCounter] = useState(store.getState().counter)
+  // useEffect(() => {
+  //   store.subscribe(() => {
+  //     const { counter } = store.getState()
+  //     setCounter(counter)
+  //   })
+  // }, [])
   // const counter = useSelector(state => state.value)
   //const dispatch = useDispatch()
   //console.log(store.getState(), 'getState()')
@@ -36,21 +37,22 @@ export const CounterApp = () => {
   //returns a reference to the dispatch function from the Redux store.
   //You may use it to dispatch actions as needed
   //const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const handleIncrement = () => {
     // dispatch({ type: "counter/incremented" })
     // store.dispatch({ type: 'counter/incremented' })
   }
   const handleDecrement = () => {
     //  dispatch({ type: "counter/decremented" })
-    store.dispatch({ type: 'decrement' })
-    // dispatch({ type: 'counter/decremented' })
+    //store.dispatch({ type: 'decrement' })
+    dispatch({ type: 'decrement' })
   }
   return (
     <div>
       <h1>Counter</h1>
-      <div>{counter}</div>
+      {/* <div>{counter}</div>
 
-      <button onClick={() => store.dispatch({ type: 'increment' })}>increment</button>
+      <button onClick={() => store.dispatch({ type: 'increment' })}>increment</button> */}
       <button onClick={handleDecrement}>decrement</button>
       {/* <button onClick={increment}>increment</button> */}
     </div>
