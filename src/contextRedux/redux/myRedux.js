@@ -1,6 +1,8 @@
-import React, { createContext, useContext } from 'react'
-import { createStore } from 'redux'
-export let store = myCreateStore(reducer)
+import React, { createContext, useContext, useState, useEffect } from 'react'
+import { createStore, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
+import thunk from 'redux-thunk'
+export let store = createStore(reducer, applyMiddleware(logger, thunk))
 
 const ReduxContext = createContext()
 export function Provider (props) {
@@ -46,10 +48,20 @@ export const useDispatch = () => {
   // console.log(context, 'context in usaDispatch myRedux')
   return context.store.dispatch
 }
+const useForceUpdate = () => {
+  const [, setVal] = useState(1)
+  return () => setVal((val) => val + 1)/////////////////////////?
+}
 export const useSelector = (selector) => { //selector is fn
   const context = useContext(ReduxContext)
-  context.store.subscribe(() => { })//? update rerender?
+  const forceUpdate = useForceUpdate() //forceUpdate=setVal(fn)
+  //context.store.subscribe(() => forceUpdate())//forceUpdate()=setVal(fn)() ?
+  useEffect(() => {
+    const unsubscribe = context.store.subscribe(() => forceUpdate())
+    return unsubscribe
+  }, [forceUpdate, context.store])
   const state = context.store.getState()
+  // console.log(state)
   return selector(state)
 }
 

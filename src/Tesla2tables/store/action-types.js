@@ -1,0 +1,3 @@
+export const RECORD_LIST = 'RECORD_LIST'
+export const RECORD_REMOVE = 'RECORD_REMOVE'
+export const RECORD_UPDATE = 'RECORD_UPDATE'

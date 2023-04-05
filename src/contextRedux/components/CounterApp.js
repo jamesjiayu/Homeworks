@@ -3,11 +3,12 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Component } from "react"
 import { useContext } from "react"
-import { store, useSelector, useDispatch, } from "../redux/myRedux"
+//import { store } from "../redux/myRedux"//useSelector, useDispatch, 
 // import { MyContext } from "../../App"
 //import { CounterContext } from "../CounterContext"
 //import { store, MyProviderContext, useSelector, useDispatch } from "../redux/redux"
-//import { useSelector, useDispatch, connect } from "react-redux"
+import { useSelector, useDispatch, connect } from "react-redux"
+import { increment, decrement, incrementAmount, fetchCounter } from "../redux/reduxToolkits"//action creators
 
 
 export const CounterApp = (props) => {
@@ -33,7 +34,10 @@ export const CounterApp = (props) => {
   // }, [])
 
   //const result: any = useSelector(selector: Function, equalityFn?: Function)
-  //const counter = useSelector(state => state.value)//function (state) { return state.value }
+  const counter = useSelector(state => {
+    // console.log(state)
+    return state.counter.value // !! state.counter.... diff from state.value in store
+  })//function (state) { return state.value }
   //returns a reference to the dispatch function from the Redux store.
   //You may use it to dispatch actions as needed
   //const dispatch = useDispatch()
@@ -45,16 +49,32 @@ export const CounterApp = (props) => {
   const handleDecrement = () => {
     //  dispatch({ type: "counter/decremented" })
     //store.dispatch({ type: 'decrement' })
-    dispatch({ type: 'decrement' })
+    //const delay = async () => { }
+    // const thunkFunction = (dispatch, getState) => {
+    //   // logic here that can dispatch actions or read state
+    //   console.log(getState(), 'getState')
+    //   setTimeout(() => {
+    //     dispatch({ type: 'decrement' })
+    //   }, 1000)
+    // }
+    // const getDataThunk = async () => {
+    //   const response = await fetch('http://localhost:3001/todos/')
+    //   console.log(response.json())
+    //   dispatch({ type: 'decrement' })
+    // }
+    dispatch(decrement())
   }
   return (
     <div>
       <h1>Counter</h1>
-      {/* <div>{counter}</div>
+      <div>{counter}</div>
 
-      <button onClick={() => store.dispatch({ type: 'increment' })}>increment</button> */}
+      <button onClick={() => dispatch(increment())}>increment</button>
       <button onClick={handleDecrement}>decrement</button>
-      {/* <button onClick={increment}>increment</button> */}
+      <button onClick={() => dispatch(incrementAmount(5))}>incrementAmount</button>
+      <button onClick={() => dispatch(fetchCounter())}>Fetch</button>
+
+
     </div>
   )
 }
