@@ -14,14 +14,16 @@ import CarsApp from "./contextRedux/components/CarsApp"
 import { useState, createContext } from "react"
 import { store } from "./contextRedux/redux/reduxToolkits"
 import { Provider } from "react-redux"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import { Test } from "./components/testRouter/test"
 import { TestRoute } from "./components/testRouter/TestRoute"
 import { NotFound } from "./components/NotFound"
 import { TestID } from "./components/testRouter/TestID"
+import { TestRoute2 } from "./components/testRouter/TestRoute2"
 import IndexTest from "./components/testRouter/IndexTest"
 import MyRoute from "./MyRouter/MyRoute"
 import MyRoutes from "./MyRouter/MyRoutes"
+import { RouterView } from "./components/router/index"
 
 //export const MyContext = createContext()//outside fn
 export default function App () {
@@ -40,21 +42,28 @@ export default function App () {
       <CarsApp /></MyContext.Provider> 
       <Provider store={store}><CarsApp /></Provider>*/}
       <Layout >
-        <MyRoutes>
-          <MyRoute path='/' element={<Dashboard />} />
-          <MyRoute path='/todolist' element={<TodoList />} />
-          <MyRoute path='/test' element={<Test />}>
-            <MyRoute index element={<IndexTest />} />
-            <MyRoute path=':id' element={<TestID />} />
-            {/* index noPath, '/test:id' <Outlet/>4kids */}
-          </MyRoute>
-          <MyRoute path='/test/route' element={<TestRoute />} />
-          <MyRoute path='*' element={<NotFound />} />
-        </MyRoutes>
+        <RouterView />
       </Layout>
     </>
   )
 }
+
+// <Routes>
+//           <Route path='/' element={<Navigate to='/dashboard' />} />
+//           <Route path='/dashboard' element={<Dashboard />}></Route>
+//           <Route path='/todolist' element={<TodoList />} />
+//           <Route path='/test' element={<Test />}>
+//             {/* <Route index element={<IndexTest />} /> */}
+//             <Route path='route' element={<TestRoute />} />
+//             <Route path='route2' element={<TestRoute2 />} />
+//             <Route path=':id' element={<TestID />} />
+//             {/* index noPath, '/test:id' <Outlet/>4kids */}
+//           </Route>
+//           <Route path='*' element={<NotFound />} />
+//         </Routes>
+//<Routes>
+//         <Route path='/todolist' element={<TodoList />} />
+//</Routes>
 //an index route is that it's the default child route 
 //when the parent matches but none of its children do.
 // import Selects from "./components/Selects";

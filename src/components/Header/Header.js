@@ -25,7 +25,7 @@ export default function Header () {
   return (//https://reactrouter.com/en/main/components/nav-link
     <ul className="nav">
       <h1>Header</h1>
-      <li ><NavLink to='/' end>DashBoard</NavLink></li>
+      <li ><NavLink to='/dashBoard' end>DashBoard</NavLink></li>
       <li ><NavLink to='/todolist' >TodoList</NavLink></li>
       <li ><NavLink to='/test' end className={
         ({ isActive, isPending }) => { }}
@@ -34,7 +34,7 @@ export default function Header () {
             fontWeight: isPending ? "bold" : "",
             background: isActive ? "red" : "",
           }
-        }}>TestNavLink</NavLink></li>
+        }}>TestNavLin</NavLink></li>
       <li><button onClick={() => {
         // setfirst({})
       }}>useNavigate</button></li>
