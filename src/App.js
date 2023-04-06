@@ -1,8 +1,8 @@
 import React from "react"
 import "./App.css"
-// import TodoList from "./components/TodoList/TodoList"
-// import Layout from "./components/Layout/Layout"
-// import Dashboard from "./components/Dashboard/Dashboard"
+import TodoList from "./components/TodoList/TodoList"
+import Layout from "./components/Layout/Layout"
+import Dashboard from "./components/Dashboard/Dashboard"
 // import { SumNumEachCountry } from "./Tesla2tables/MUI/SumSalesNumEachCountry"
 // import EnhancedTable from "./Tesla2tables/MUI/SortTable"
 // import DataTable from "./Tesla2tables/DataGrid"
@@ -14,6 +14,15 @@ import CarsApp from "./contextRedux/components/CarsApp"
 import { useState, createContext } from "react"
 import { store } from "./contextRedux/redux/reduxToolkits"
 import { Provider } from "react-redux"
+import { Routes, Route } from "react-router-dom"
+import { Test } from "./components/testRouter/test"
+import { TestRoute } from "./components/testRouter/TestRoute"
+import { NotFound } from "./components/NotFound"
+import { TestID } from "./components/testRouter/TestID"
+import IndexTest from "./components/testRouter/IndexTest"
+import MyRoute from "./MyRouter/MyRoute"
+import MyRoutes from "./MyRouter/MyRoutes"
+
 //export const MyContext = createContext()//outside fn
 export default function App () {
   // const [counter, setCounter] = useState(1)
@@ -28,12 +37,26 @@ export default function App () {
       <SumNumEachCountryVanilla data={data} />
       <RegionModelFiltersVanilla data={data} /> 
       <MyContext.Provider value={{ counter, increment }}> 
-      <CarsApp /></MyContext.Provider> */}
-      <Provider store={store}><CarsApp /></Provider>
+      <CarsApp /></MyContext.Provider> 
+      <Provider store={store}><CarsApp /></Provider>*/}
+      <Layout >
+        <MyRoutes>
+          <MyRoute path='/' element={<Dashboard />} />
+          <MyRoute path='/todolist' element={<TodoList />} />
+          <MyRoute path='/test' element={<Test />}>
+            <MyRoute index element={<IndexTest />} />
+            <MyRoute path=':id' element={<TestID />} />
+            {/* index noPath, '/test:id' <Outlet/>4kids */}
+          </MyRoute>
+          <MyRoute path='/test/route' element={<TestRoute />} />
+          <MyRoute path='*' element={<NotFound />} />
+        </MyRoutes>
+      </Layout>
     </>
   )
 }
-
+//an index route is that it's the default child route 
+//when the parent matches but none of its children do.
 // import Selects from "./components/Selects";
 // import useGetData from "./hooks/useGetData";
 // import "./App.css";
@@ -98,3 +121,20 @@ for (let i = 0; i < 18; i++) {
       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ele}.png`} alt="ele" /></li>)}
 </ul>
 </div> */}
+
+
+// import {
+//   createBrowserRouter,
+//   RouterProvider,
+// } from "react-router-dom";
+
+// // You can do this:
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route path="/" element={<Root />}>
+//       <Route path="dashboard" element={<Dashboard />} />
+//       <Route path="about" element={<About />} />
+//     </Route>
+//   )
+// );
+//<RouterProvider></RouterProvider>

@@ -1,18 +1,32 @@
-import React from "react"
+import React, { useContext } from "react"
 import Header from "../Header/Header"
+import { RouterContext } from "../../MyRouter/MyBrowerRouter"
 
-class Layout extends React.Component {
-  render () {
-    const { handleChangeActivePage } = this.props
-    return (
-      <>
-        <header>
-          <Header handleChangeActivePage={handleChangeActivePage} />
-        </header>
-        <main className="content">{this.props.children}</main>
-      </>
-    )
-  }
+export default function Layout (props) {
+  // const first = useContext(RouterContext)
+  // console.log("context", first)
+  return (
+    <>
+      <header>
+        <Header />
+      </header>
+      <main className="content">{props.children}</main>
+    </>
+  )
 }
 
-export default Layout
+// class Layout extends React.Component {
+//   render () {
+//     const { handleChangeActivePage } = this.props
+//     return (
+//       <>
+//         <header>
+//           <Header handleChangeActivePage={handleChangeActivePage} />
+//         </header>
+//         <main className="content">{this.props.children}</main>
+//       </>
+//     )
+//   }
+// }
+
+// export default Layout
