@@ -56,15 +56,15 @@ let array =
       sales: 400
     }
   ]
-const regions = ['All'], models = ['All']
-function createRegionsModels (arr) {
-  arr?.forEach(ele => {
-    if (!regions.includes(ele.region)) { regions.push(ele.region) }
-    if (!models.includes(ele.model)) { models.push(ele.model) }
-  })
-  // console.log(regions, 'in createRegionsModels')
-  return { regions, models }
-}
+// const regions = ['All'], models = ['All']
+// function createRegionsModels (arr) {
+//   arr?.forEach(ele => {
+//     if (!regions.includes(ele.region)) { regions.push(ele.region) }
+//     if (!models.includes(ele.model)) { models.push(ele.model) }
+//   })
+//   // console.log(regions, 'in createRegionsModels')
+//   return { regions, models }
+// }
 
 function createData (arr, region = 'All', model = 'All') {
   // console.log(region, 'region in createDatae')
@@ -104,22 +104,42 @@ function formatData (items, options) {
 // }
 export default function RegionModelFiltersVanilla ({ data }) {
   // const [rows, setRows] = useState(data)
-  // console.log(data, 'data in RegionModelFiltersVanilla')
-  const [rows, setRows] = useState(array)
+  const [rows, setRows] = useState([])
+  const [columns, setColumns] = useState([])
+  const [regions, setRegions] = useState([])
+  const [models, setModels] = useState([])
+  let [region, onRegionChange, regionOptions] = useSelect({ data: regions ?? [] })
+  //let [model, onModelChange, modelOptions, setVal] = useSelect({ data: models ?? [] })
+  const [model, setModel] = useState('All')
+  const [filterRows, setFilterRows] = useState([])
+  useEffect(() => {
+    setRows(data)
+  }, [])
+  useEffect(() => {
+    const columnsSet = new Set()
+    const regionsSet = new Set()
 
-  let [region, onRegionChange, regionOptions] = useSelect({ data: regions || [] })
-  let [model, onModelChange, modelOptions] = useSelect({ data: models || [] })
+    data?.forEach(item => {
+      Object.keys(item).forEach(ele => columnsSet.add(ele))
+      regionsSet.add(item.region)
+    })
+    setColumns([...columnsSet])
+    setRegions(['All', ...regionsSet])
+
+  }, [data])
+  useEffect(() => { //一开始只有All并且region一变就setModel('All')
+    const modelsSet = new Set()
+    data?.filter(item => region === item.region)
+      .forEach(item => { modelsSet.add(item.model) })
+    setModels(['All', ...modelsSet])
+    setModel('All')
+  }, [data, region])
 
   // const [region, setRegion] = useState('All')
   // const [model, setModel] = useState('All')
   // const { regions, models } = createRegionsModels(array)
   //const { regions, models } = useMemo(() => createRegionsModels(data), [data])
   //console.log(regions, 'regions in RegionModelFiltersVanilla')
-  useEffect(() => {
-    // setData(array)
-    createRegionsModels(array)
-    // setRows(data)
-  }, [])
 
   // const handleRegion = (e) => {
   //   setRegion(e.target.value)
@@ -129,10 +149,17 @@ export default function RegionModelFiltersVanilla ({ data }) {
   //   setModel(e.target.value)
   // }
   useEffect(() => {
-    setRows(createData(array, region, model))
-    // setData(createData(data, region, model))
-    // console.log(createData(array, region))
-  }, [region, model])
+    let newRows = rows?.filter(item => {
+      if (region === 'All') return true
+      return item.region === region
+    }).filter(item => {
+      if (model === 'All') return true
+      return item.model === model
+    })
+    //console.log(newRows)
+    setFilterRows(newRows)
+    //  setRows(createData(array, region, model))//
+  }, [rows, region, model])
 
   return (
     <div>
@@ -148,26 +175,22 @@ export default function RegionModelFiltersVanilla ({ data }) {
         <Select label='RegionFilter' value={region}
           onChange={onRegionChange} options={regionOptions} />
         <Select label='ModelFilter' value={model}
-          onChange={onModelChange} options={modelOptions} />
-
+          onChange={(e) => { setModel(e.target.value) }} options={models} />
       </div>
       <table>
         <thead>
           <TableRow>
-            <TableCell>Region</TableCell>
-            <TableCell>Model</TableCell>
-            <TableCell>Sales</TableCell>
+            {columns.map(col =>
+              <TableCell key={col}>{col}</TableCell>)}
           </TableRow>
         </thead>
         <tbody>
-          {rows?.map((row, index) => {
-            //  console.log('data in map')
+          {filterRows?.map((row, index) => {
+            //  console.log('data in map') //key use uuid
             return (
-              <TableRow key={index} >
-                <TableCell>{row.region}</TableCell>
-                <TableCell>{row.model}</TableCell>
-                <TableCell>{row.sales}</TableCell>
-              </TableRow>
+              <TableRow key={index} >{
+                columns.map(col => <TableCell key={col}>{row[col]}</TableCell>)
+              }</TableRow>
             )
           })}
           {/* {

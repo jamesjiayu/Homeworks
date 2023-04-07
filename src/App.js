@@ -29,7 +29,7 @@ import { RouterView } from "./components/router/index"
 export default function App () {
   // const [counter, setCounter] = useState(1)
   // const increment = () => { setCounter(counter + 1) }
-  // const { isLoading, error, data } = useGetData()
+  const { isLoading, error, data } = useGetData()
   // console.log(data, 'data in App')
   return (
     <>{/*<DataTable />
@@ -40,10 +40,11 @@ export default function App () {
       <RegionModelFiltersVanilla data={data} /> 
       <MyContext.Provider value={{ counter, increment }}> 
       <CarsApp /></MyContext.Provider> 
-      <Provider store={store}><CarsApp /></Provider>*/}
+      <Provider store={store}><CarsApp /></Provider>
       <Layout >
         <RouterView />
-      </Layout>
+      </Layout>*/}
+      <RegionModelFiltersVanilla data={data} />
     </>
   )
 }
