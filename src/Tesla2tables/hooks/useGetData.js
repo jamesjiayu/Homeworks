@@ -8,8 +8,7 @@ export default function useGetData (initState) {
     try {
       const res = await getData()
       setData(res)
-      console.log(data, 'data in useGetData')
-
+      //console.log(data, 'data in useGetData')
     } catch (error) {
       setError(error.message || 'sth wrong when fetching data')
     }

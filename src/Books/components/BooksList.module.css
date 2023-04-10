@@ -1,0 +1,17 @@
+.bookslist ul {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.title:hover,
+.thumbnail:hover {
+  cursor: pointer;
+}
+.bookslist {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

@@ -24,15 +24,14 @@ import IndexTest from "./components/testRouter/IndexTest"
 import MyRoute from "./MyRouter/MyRoute"
 import MyRoutes from "./MyRouter/MyRoutes"
 import { RouterView } from "./components/router/index"
-
+import Search from "./Books/Search"
 //export const MyContext = createContext()//outside fn
 export default function App () {
   // const [counter, setCounter] = useState(1)
   // const increment = () => { setCounter(counter + 1) }
-  const { isLoading, error, data } = useGetData()
-  // console.log(data, 'data in App')
-  return (
-    <>{/*<DataTable />
+  // const { isLoading, error, data } = useGetData()
+  return (<>
+    {/*<DataTable />
       <EnhancedTable />
        <SumNumEachCountry /> 
       <RegionModelFilters />       
@@ -44,9 +43,8 @@ export default function App () {
       <Layout >
         <RouterView />
       </Layout>*/}
-      <RegionModelFiltersVanilla data={data} />
-    </>
-  )
+    <Search></Search>
+  </>)
 }
 
 // <Routes>

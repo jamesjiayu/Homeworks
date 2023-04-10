@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, Component } from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk'
@@ -48,10 +48,7 @@ export const useDispatch = () => {
   // console.log(context, 'context in usaDispatch myRedux')
   return context.store.dispatch
 }
-const useForceUpdate = () => {
-  const [, setVal] = useState(1)
-  return () => setVal((val) => val + 1)/////////////////////////?
-}
+
 export const useSelector = (selector) => { //selector is fn
   const context = useContext(ReduxContext)
   const forceUpdate = useForceUpdate() //forceUpdate=setVal(fn)
@@ -64,7 +61,38 @@ export const useSelector = (selector) => { //selector is fn
   // console.log(state)
   return selector(state)
 }
+// mapStateToProps?: Function
+// mapDispatchToProps?: Function | Object
+// mergeProps?: Function
+// options?: Object
+// do not pass `mapDispatchToProps`
+// connect()(MyComponent)
+// connect(mapState)(MyComponent)
+// connect(mapState, null, mergeProps, options)(MyComponent)
 
+export function connect (mapStateToProps, mapDispatchToProps, mergeProps, options) {
+
+  return function (MyComponent) {
+    return function () { //might be a class
+      ///...
+      return <MyComponent />
+    }
+  }
+}
+const myConnect2 = (mapStateToProps, mapDispatchToProps) => {
+
+  return (MyComponent) => {
+    return () => { //might be a class
+      ///...
+      return <MyComponent />
+    }
+  }
+}
+const myConnect3 = (mapStateToProps, mapDispatchToProps) => {
+  return MyComponent => () => {
+    return <MyComponent />
+  }
+}
 //Closure!!!!
 //createStore(reducer, [preloadedState], [enhancer]) return store
 //initial state. ||| (Function): store enhancer
@@ -80,7 +108,3 @@ export const useSelector = (selector) => { //selector is fn
 //You may use it to dispatch actions as needed
 //const dispatch = useDispatch()
 
-// mapStateToProps?: Function
-// mapDispatchToProps?: Function | Object
-// mergeProps?: Function
-// options?: Object

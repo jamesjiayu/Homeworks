@@ -118,15 +118,14 @@ export default function RegionModelFiltersVanilla ({ data }) {
   useEffect(() => {
     const columnsSet = new Set()
     const regionsSet = new Set()
-
+    //const modelsSet = new Set() //不受region控制
     data?.forEach(item => {
       Object.keys(item).forEach(ele => columnsSet.add(ele))
-      regionsSet.add(item.region)
+      regionsSet.add(item.region)// modelsSet.add(item.model)
     })
     setColumns([...columnsSet])
-    setRegions(['All', ...regionsSet])
-
-  }, [data])
+    setRegions(['All', ...regionsSet])//setModels(['All', ...modelsSet])
+  }, [data]) // 
   useEffect(() => { //一开始只有All并且region一变就setModel('All')
     const modelsSet = new Set()
     data?.filter(item => region === item.region)
@@ -149,17 +148,16 @@ export default function RegionModelFiltersVanilla ({ data }) {
   //   setModel(e.target.value)
   // }
   useEffect(() => {
-    let newRows = rows?.filter(item => {
+    let newRows = data?.filter(item => {
       if (region === 'All') return true
       return item.region === region
     }).filter(item => {
       if (model === 'All') return true
       return item.model === model
     })
-    //console.log(newRows)
     setFilterRows(newRows)
     //  setRows(createData(array, region, model))//
-  }, [rows, region, model])
+  }, [data, region, model]) //if rows(not data).不显示
 
   return (
     <div>
