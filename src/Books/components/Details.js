@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addBook, removeBook, } from '../Redux/store'
 import { useDispatch, useSelector } from 'react-redux'
+import img from '../public/backup.jpg'
 
 export default function Details (props) {
   //const [isShow, setIsShow] = useState(false)
@@ -23,7 +24,7 @@ export default function Details (props) {
     <div className='details_container'>
       <h3 className="title">{volumeInfo?.title}</h3>
       <div className="big_thumbnail">
-        <img src={volumeInfo?.imageLinks?.smallThumbnail} alt={volumeInfo?.title} /> </div>
+        <img src={volumeInfo?.imageLinks?.smallThumbnail ?? img} alt={volumeInfo?.title} /> </div>
       <div className="authors">{
         volumeInfo.authors?.map(author => <div key={author}>{author}</div>)
       }</div>

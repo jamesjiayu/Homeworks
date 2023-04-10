@@ -4,7 +4,7 @@ import styles from './BooksList.module.css'
 import { useDispatch } from 'react-redux'
 import { bookDetails } from '../Redux/store'
 import { removeBook, } from '../Redux/store'
-
+import img from '../public/backup.jpg'
 export default function BooksList (props) {
   let { booksList, isShowRemove } = props
   const navigate = useNavigate()
@@ -36,7 +36,7 @@ export default function BooksList (props) {
               </div>
               <div className={styles.thumbnail} onClick={() => handleClick(book)}>
                 {/* <object data="../public/backup.jpg" type="image/jpg"> */}
-                <img src={volumeInfo.imageLinks?.smallThumbnail} alt={volumeInfo.title} />
+                <img src={volumeInfo.imageLinks?.smallThumbnail ?? img} alt={volumeInfo.title} />
                 {/* </object> */}
               </div>
               {isShowRemove && (
